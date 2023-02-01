@@ -1,0 +1,5 @@
+{
+  "name": "main",
+  "description": "The main server hosted in central Europe, right at the bottom of the baltic lake in a hidden underwater base.",
+  "datacenter": "eu_central_1"
+}
