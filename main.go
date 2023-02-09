@@ -74,28 +74,28 @@ func mainE() error {
 
 	v1 := router.Group("/v1")
 	{
-		v1.POST("/server", func(c *gin.Context) {
+		v1.POST("/pet", func(c *gin.Context) {
 			ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
 			defer cancel()
-			var server model.NewServer
-			if err := c.ShouldBindJSON(&server); err != nil {
+			var pet model.NewPet
+			if err := c.ShouldBindJSON(&pet); err != nil {
 				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				return
 			}
-			id, err := db.CreateServer(ctx, server)
+			id, err := db.CreatePet(ctx, pet)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			}
-			log.Info().Str("id", id).Msg("Created new server.")
+			log.Info().Str("id", id).Msg("Created new pet.")
 			c.JSON(http.StatusOK, gin.H{"id": id})
 		})
 
-		v1.GET("/server/:id", func(c *gin.Context) {
+		v1.GET("/pet/:id", func(c *gin.Context) {
 			ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
 			defer cancel()
 			id := c.Param("id")
-			server, err := db.GetServer(ctx, id)
+			pet, err := db.GetPet(ctx, id)
 			if errors.Is(err, database.ErrNotFound) {
 				c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 				return
@@ -108,7 +108,7 @@ func mainE() error {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			}
-			c.JSON(http.StatusOK, server)
+			c.JSON(http.StatusOK, pet)
 		})
 	}
 

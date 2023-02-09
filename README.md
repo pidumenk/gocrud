@@ -35,15 +35,15 @@ GOCRUD_MONGO_URI=mongodb://admin:password@localhost:27017
 
 By default, gocrud exposes the following endpoints on port 8080:
 
-- [`POST /v1/server` Create server](#create-server)
-- [`GET /v1/server` Get server](#get-server)
+- [`POST /v1/pet` Create pet](#create-pet)
+- [`GET /v1/pet` Get pet](#get-pet)
 
-### Create server
+### Create pet
 
-Creates a new server, and returns the ID of the server created.
+Creates a new pet, and returns the ID of the pet created.
 
 ```http
-POST /v1/server
+POST /v1/pet
 Accept: application/json
 Content-Type: application/json
 
@@ -61,7 +61,7 @@ Content-Type: application/json
 > ```http
 > HTTP/1.1 200 OK
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "id": "string"
 > }
@@ -72,7 +72,7 @@ Content-Type: application/json
 > ```http
 > HTTP/1.1 400 Bad Request
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "error": "string"
 > }
@@ -83,7 +83,7 @@ Content-Type: application/json
 > ```http
 > HTTP/1.1 500 Internal Server Error
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "error": "string"
 > }
@@ -91,18 +91,18 @@ Content-Type: application/json
 
 </details>
 
-### Get server
+### Get pet
 
-Retrieves an existing server.
+Retrieves an existing pet.
 
 ```http
-GET /v1/server/:id
+GET /v1/pet/:id
 Accept: application/json
 ```
 
 Parameters:
 
-- `:id` *(path)*: ID of the server object,
+- `:id` *(path)*: ID of the pet object,
   formatted as a 24-character long hexadecimal number.
 
 <details><summary>Responses (click to expand)</summary>
@@ -112,7 +112,7 @@ Parameters:
 > ```http
 > HTTP/1.1 200 OK
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "id": "string",
 >   "name": "string",
@@ -122,33 +122,33 @@ Parameters:
 > ```
 
 > - Invalid `:id` parameter format.
-> 
+>
 > ```http
 > HTTP/1.1 400 Bad Request
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "error": "string"
 > }
 > ```
 
-> - No server was found with the ID of `:id`
-> 
+> - No pet was found with the ID of `:id`
+>
 > ```http
 > HTTP/1.1 404 Not Found
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "error": "string"
 > }
 > ```
 
 > - Failed to retrieve object from database.
-> 
+>
 > ```http
 > HTTP/1.1 500 Internal Server Error
 > Content-Type: application/json; charset=utf-8
-> 
+>
 > {
 >   "error": "string"
 > }
@@ -180,11 +180,11 @@ Parameters:
 3. To test out the webhooks, you can make use of our example webhook like so:
 
    ```console
-   $ curl localhost:8080/v1/server --json @examples/server.json
+   $ curl localhost:8080/v1/pet --json @examples/pet.json
    {"id":"63d00f3a87cb268ed07657e6"}
 
-   $ curl localhost:8080/v1/server/63d00f3a87cb268ed07657e6
-   {"name":"main","description":"The main server hosted in central Europe, right at the bottom of the baltic lake in a hidden underwater base.","datacenter":"eu_central_1"}
+   $ curl localhost:8080/v1/pet/63d00f3a87cb268ed07657e6
+   {"id":"63d00f3a87cb268ed07657e6","name":"Grande Hazelnut Mc.Muffin","species":"dog","breed":"Dobermann"}
    ```
 
 ## License

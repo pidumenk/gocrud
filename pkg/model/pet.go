@@ -17,15 +17,15 @@
 
 package model
 
-type NewServer struct {
-	Name        string `json:"name" bson:"name,omitempty"`
-	Description string `json:"description" bson:"description,omitempty"`
-	Datacenter  string `json:"datacenter" bson:"datacenter,omitempty"`
+type NewPet struct {
+	Name    string `json:"name" bson:"name,omitempty"`
+	Species string `json:"species" bson:"species,omitempty"`
+	Breed   string `json:"breed" bson:"breed,omitempty"`
 }
 
-type Server struct {
-	ID          string `json:"id" bson:"_id"`
-	Name        string `json:"name" bson:"name,omitempty"`
-	Description string `json:"description" bson:"description,omitempty"`
-	Datacenter  string `json:"datacenter" bson:"datacenter,omitempty"`
+type Pet struct {
+	ID      string `json:"id" bson:"_id"`
+	Name    string `json:"name" bson:"name,omitempty"`
+	Species string `json:"species" bson:"species,omitempty"`
+	Breed   string `json:"breed" bson:"breed,omitempty"`
 }

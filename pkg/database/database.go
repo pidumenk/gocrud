@@ -39,15 +39,15 @@ var (
 )
 
 type Client interface {
-	CreateServer(ctx context.Context, server model.NewServer) (string, error)
-	GetServer(ctx context.Context, id string) (model.Server, error)
+	CreatePet(ctx context.Context, pet model.NewPet) (string, error)
+	GetPet(ctx context.Context, id string) (model.Pet, error)
 	Close() error
 }
 
 type MongoDBClient struct {
-	uri        string
-	mongo      *mongo.Client
-	serversCol *mongo.Collection
+	uri     string
+	mongo   *mongo.Client
+	petsCol *mongo.Collection
 }
 
 // Ensures it implements the interface
@@ -66,14 +66,14 @@ func ConnectMongoDB(ctx context.Context, uri, db string) (Client, error) {
 	}
 	log.Debug().Msg("Connected to mongodb.")
 	return &MongoDBClient{
-		uri:        uri,
-		mongo:      client,
-		serversCol: client.Database(db).Collection("servers"),
+		uri:     uri,
+		mongo:   client,
+		petsCol: client.Database(db).Collection("pets"),
 	}, nil
 }
 
-func (c *MongoDBClient) CreateServer(ctx context.Context, server model.NewServer) (string, error) {
-	res, err := c.serversCol.InsertOne(ctx, server)
+func (c *MongoDBClient) CreatePet(ctx context.Context, pet model.NewPet) (string, error) {
+	res, err := c.petsCol.InsertOne(ctx, pet)
 	if err != nil {
 		return "", err
 	}
@@ -84,21 +84,21 @@ func (c *MongoDBClient) CreateServer(ctx context.Context, server model.NewServer
 	return id.Hex(), nil
 }
 
-func (c *MongoDBClient) GetServer(ctx context.Context, id string) (model.Server, error) {
+func (c *MongoDBClient) GetPet(ctx context.Context, id string) (model.Pet, error) {
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return model.Server{}, fmt.Errorf("%w, %s", ErrBadRequest, err)
+		return model.Pet{}, fmt.Errorf("%w, %s", ErrBadRequest, err)
 	}
-	var server model.Server
-	if err := c.serversCol.
+	var pet model.Pet
+	if err := c.petsCol.
 		FindOne(ctx, bson.D{{Key: "_id", Value: objectId}}).
-		Decode(&server); err != nil {
+		Decode(&pet); err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
-			return model.Server{}, ErrNotFound
+			return model.Pet{}, ErrNotFound
 		}
-		return model.Server{}, err
+		return model.Pet{}, err
 	}
-	return server, nil
+	return pet, nil
 }
 
 func (c *MongoDBClient) Close() error {
