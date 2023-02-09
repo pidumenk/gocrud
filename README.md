@@ -160,7 +160,7 @@ Parameters:
 
 ### Prerequisites
 
-- Go 1.19 (or higher)
+- Go 1.20 (or higher)
 - A way to run MongoDB locally, e.g via a container using [Podman](https://podman.io/)
 
 ### Running locally
