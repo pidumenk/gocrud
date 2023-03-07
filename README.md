@@ -49,8 +49,8 @@ Content-Type: application/json
 
 {
   "name": "string",
-  "description": "string",
-  "datacenter": "string"
+  "species": "string",
+  "breed": "string"
 }
 ```
 
@@ -115,9 +115,9 @@ Parameters:
 >
 > {
 >   "id": "string",
->   "name": "string",
->   "description": "string",
->   "datacenter": "string"
+>   "name": "Grande Hazelnut Mc.Muffin",
+>   "species": "dog",
+>   "breed": "Dobermann"
 > }
 > ```
 
